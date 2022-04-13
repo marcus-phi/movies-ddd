@@ -9,7 +9,7 @@ type IMoviesService =
   abstract member GetUpcoming : Movie list
   abstract member GetById : id: string -> Movie
 
-type MoviesServiceImpl(moviesProvider: MoviesProvider) =
+type MoviesServiceImpl(moviesProvider: IMoviesProvider) =
 
   interface IMoviesService with
     member this.GetPopulars =
