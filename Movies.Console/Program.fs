@@ -1,4 +1,5 @@
 open Microsoft.FSharp.Core
+open Movies.Domain.Models
 open Movies.Domain.Outbound
 open Movies.Domain.Services
 open Movies.Infra.Services
@@ -18,6 +19,17 @@ let getMoviesService apiKey =
     TheMoviesDBService(client) :> IMoviesProvider
 
   MoviesServiceImpl(moviesProvider) :> IMoviesService
+  
+let printMovie (m: Movie) =
+  printfn "***************************************"
+  printfn $"Id: {m.Id}"
+  printfn $"Title: {m.Title}"
+  printfn $"Synopsys: {m.Synopsys}"
+  printfn $"Rate: {m.Rate}"
+  printfn $"ReleaseDate: {m.ReleaseDate}"
+  printfn $"Director: {m.Director.FirstName} - {m.Director.Name}"
+  printfn "Actors:"
+  m.Actors |> Seq.iter (fun a -> printfn $"  * {a.FirstName} - {a.Name}")
 
 [<EntryPoint>]
 let main args =
@@ -27,13 +39,13 @@ let main args =
   match arguments with
   | "-apiKey" :: apiKey :: "-popular" :: _ ->
     (getMoviesService apiKey).GetPopulars()
-    |> Seq.iter (fun m -> printfn $"%A{m}")
+    |> Seq.iter printMovie
   | "-apiKey" :: apiKey :: "-upcoming" :: _ ->
     (getMoviesService apiKey).GetUpcoming()
-    |> Seq.iter (fun m -> printfn $"%A{m}")
+    |> Seq.iter printMovie
   | "-apiKey" :: apiKey :: "-get" :: id :: _ ->
     (getMoviesService apiKey).GetById id
-    |> printfn "%A"
+    |> printMovie
   | _ -> printUsage ()
 
   0
