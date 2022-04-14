@@ -8,6 +8,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Movies.Domain", "Movies.Domain\Movies.Domain.fsproj", "{84B05109-7FF7-46D4-AAF7-3F51C7BC1663}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Movies.Infra", "Movies.Infra\Movies.Infra.fsproj", "{266CAB10-F6C7-441F-BB7D-DE41AB18463F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{84B05109-7FF7-46D4-AAF7-3F51C7BC1663}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84B05109-7FF7-46D4-AAF7-3F51C7BC1663}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84B05109-7FF7-46D4-AAF7-3F51C7BC1663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{266CAB10-F6C7-441F-BB7D-DE41AB18463F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{266CAB10-F6C7-441F-BB7D-DE41AB18463F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{266CAB10-F6C7-441F-BB7D-DE41AB18463F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{266CAB10-F6C7-441F-BB7D-DE41AB18463F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
