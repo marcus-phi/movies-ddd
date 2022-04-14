@@ -3,6 +3,6 @@
 open Movies.Domain.Models
 
 type IMoviesProvider =
-  abstract member GetPopulars : Movie list
-  abstract member GetUpcoming : Movie list
+  abstract member GetPopulars : unit -> Movie list
+  abstract member GetUpcoming : unit -> Movie list
   abstract member GetById : id: string -> Movie option

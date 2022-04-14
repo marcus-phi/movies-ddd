@@ -13,7 +13,7 @@ type MoviesServiceImpl(moviesProvider: IMoviesProvider) =
 
   interface IMoviesService with
     member this.GetPopulars() =
-      let movies = moviesProvider.GetPopulars
+      let movies = moviesProvider.GetPopulars()
 
       if movies.IsEmpty then
         raise (MoviesNotFound("Popular movies not found"))
@@ -21,7 +21,7 @@ type MoviesServiceImpl(moviesProvider: IMoviesProvider) =
         movies
 
     member this.GetUpcoming() =
-      let movies = moviesProvider.GetUpcoming
+      let movies = moviesProvider.GetUpcoming()
 
       if movies.IsEmpty then
         raise (MoviesNotFound("Latest movies not found"))
