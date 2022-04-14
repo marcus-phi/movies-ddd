@@ -10,13 +10,10 @@ open TMDbLib.Objects.Search
 type TheMoviesDBService(client: TMDbClient) =
 
   let mapSearchMovie (m: SearchMovie) =
-    client.GetMovieAsync(m.Id)
+    client.GetMovieAsync(m.Id, MovieMethods.Credits)
     |> Async.AwaitTask
 
   let mapMovie (m: Movie) =
-    if m.ReleaseDate.HasValue = false then
-      raise (ArgumentNullException("ReleaseDate"))
-
     let director =
       m.Credits.Crew
       |> Seq.find (fun c -> c.Job = "Director")
@@ -25,7 +22,7 @@ type TheMoviesDBService(client: TMDbClient) =
       Title = m.Title
       Synopsys = m.Overview
       Rate = Rate m.Popularity
-      ReleaseDate = DateOnly.FromDateTime(m.ReleaseDate.Value)
+      ReleaseDate = if m.ReleaseDate.HasValue then DateOnly.FromDateTime(m.ReleaseDate.Value) else DateOnly.MinValue
       Director =
         { Name = director.Name
           FirstName = director.Name.Split(" ").[0] }
@@ -38,7 +35,7 @@ type TheMoviesDBService(client: TMDbClient) =
         |> List.ofSeq }
 
   interface IMoviesProvider with
-    member this.GetPopulars =
+    member this.GetPopulars() =
       async {
         let! movies =
           client.GetMoviePopularListAsync("en", 1)
@@ -53,7 +50,7 @@ type TheMoviesDBService(client: TMDbClient) =
       |> Seq.map mapMovie
       |> List.ofSeq
 
-    member this.GetUpcoming =
+    member this.GetUpcoming() =
       async {
         let! movies =
           client.GetMovieUpcomingListAsync("en", 1)
@@ -75,9 +72,9 @@ type TheMoviesDBService(client: TMDbClient) =
         raise (InvalidCastException($"Cannot parse id '{id}' to int"))
 
       let movie =
-        client.GetMovieAsync(_id)
+        client.GetMovieAsync(_id, MovieMethods.Credits)
         |> Async.AwaitTask
         |> Async.RunSynchronously
         |> mapMovie
-        
+
       Some movie
